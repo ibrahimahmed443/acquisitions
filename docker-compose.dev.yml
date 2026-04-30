@@ -1,0 +1,32 @@
+services:
+  neon-local:
+    image: neondatabase/neon_local:latest
+    ports:
+      - '5432:5432'
+    env_file: .env.development
+    volumes:
+      - ./.neon_local/:/tmp/.neon_local
+      - ./.git/HEAD:/tmp/.git/HEAD:ro,consistent
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U neon || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+
+  app:
+    build:
+      context: .
+      target: development
+    ports:
+      - '${PORT:-4000}:4000'
+    env_file: .env.development
+    environment:
+      # Overrides the DATABASE_URL from .env.development to target the local proxy
+      DATABASE_URL: postgres://neon:npg@neon-local:5432/neondb?sslmode=require
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      neon-local:
+        condition: service_healthy

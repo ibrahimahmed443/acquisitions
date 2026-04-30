@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+      target: production
+    ports:
+      - '${PORT:-4000}:4000'
+    env_file: .env.production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:${PORT:-4000}/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s

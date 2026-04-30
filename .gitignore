@@ -1,3 +1,7 @@
 node_modules
 .vscode
 .env
+.env.development
+.env.production
+.neon_local/
+logs/
