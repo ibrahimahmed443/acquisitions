@@ -77,3 +77,8 @@
 {"level":"info","message":"User created: ibrahim4@gmail.com with role user","service":"acquisitions-api","timestamp":"2026-04-30 15:46:12"}
 {"level":"info","message":"User resgistered: ibrahim4@gmail.com with role user","service":"acquisitions-api","timestamp":"2026-04-30 15:46:12"}
 {"level":"info","message":"::ffff:192.168.65.1 - - [30/Apr/2026:15:46:12 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 201 118 \"-\" \"HTTPie\"","service":"acquisitions-api","timestamp":"2026-04-30 15:46:12"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [01/May/2026:13:09:01 +0000] \"GET /health HTTP/1.1\" 200 72 \"-\" \"-\"","service":"acquisitions-api","timestamp":"2026-05-01 18:09:01"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [01/May/2026:13:09:01 +0000] \"GET /api HTTP/1.1\" 200 41 \"-\" \"-\"","service":"acquisitions-api","timestamp":"2026-05-01 18:09:01"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/May/2026:13:10:41 +0000] \"GET /health HTTP/1.1\" 200 76 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\"","service":"acquisitions-api","timestamp":"2026-05-01 13:10:41"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [01/May/2026:13:10:49 +0000] \"GET /health HTTP/1.1\" 200 75 \"-\" \"-\"","service":"acquisitions-api","timestamp":"2026-05-01 18:10:49"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [01/May/2026:13:10:49 +0000] \"GET /api HTTP/1.1\" 200 41 \"-\" \"-\"","service":"acquisitions-api","timestamp":"2026-05-01 18:10:49"}
