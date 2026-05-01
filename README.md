@@ -14,10 +14,10 @@ Node.js / Express REST API backed by [Neon](https://neon.tech) PostgreSQL.
 
 ## Environment variables
 
-| File | Purpose |
-|---|---|
-| `.env.development` | Local Docker dev — filled with your Neon API credentials |
-| `.env.production` | Production Docker — filled with your Neon Cloud connection string |
+| File               | Purpose                                                           |
+| ------------------ | ----------------------------------------------------------------- |
+| `.env.development` | Local Docker dev — filled with your Neon API credentials          |
+| `.env.production`  | Production Docker — filled with your Neon Cloud connection string |
 
 Neither file is committed to git. Copy the relevant section from below.
 
@@ -51,6 +51,7 @@ docker compose -f docker-compose.dev.yml up --build
 ```
 
 Docker will:
+
 1. Pull `neondatabase/neon_local` and create an ephemeral Neon branch.
 2. Build the app image (development target) and start it with `--watch` for hot-reload.
 3. Inject `DATABASE_URL=postgres://neon:npg@neon-local:5432/neondb?sslmode=require` into the app — overriding whatever is in `.env.development`.
@@ -73,8 +74,7 @@ The ephemeral Neon branch is deleted automatically.
 
 > **Mac + Docker Desktop note:** For reliable file watching (`--watch`) and Git volume mounts, use **gRPC FUSE** instead of VirtioFS in Docker Desktop → Settings → General.
 
-Alternatively, You can build the project by running: npm run dev:docker
----
+## Alternatively, You can build the project by running: npm run dev:docker
 
 ## Production (Neon Cloud)
 
@@ -110,15 +110,14 @@ curl http://localhost:4000/health
 # {"status":"OK","timestamp":"...","uptime":...}
 ```
 
-Alternatively, You can build the project by running: npm run prod:docker
----
+## Alternatively, You can build the project by running: npm run prod:docker
 
 ## How `DATABASE_URL` switches between environments
 
-| Context | `DATABASE_URL` value | Driver config |
-|---|---|---|
-| **Dev (Docker)** | `postgres://neon:npg@neon-local:5432/neondb` | `neonConfig` set to HTTP mode (see `src/config/database.js`) |
-| **Prod (Docker)** | Your Neon Cloud URL (`...neon.tech`) | Default — standard Neon HTTPS |
+| Context           | `DATABASE_URL` value                         | Driver config                                                |
+| ----------------- | -------------------------------------------- | ------------------------------------------------------------ |
+| **Dev (Docker)**  | `postgres://neon:npg@neon-local:5432/neondb` | `neonConfig` set to HTTP mode (see `src/config/database.js`) |
+| **Prod (Docker)** | Your Neon Cloud URL (`...neon.tech`)         | Default — standard Neon HTTPS                                |
 
 `docker-compose.dev.yml` injects the local URL via an `environment:` block that **overrides** any value in `.env.development`, so there is no risk of accidentally pointing dev at production.
 

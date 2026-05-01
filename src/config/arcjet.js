@@ -21,9 +21,8 @@ const aj = arcjet({
       mode: 'LIVE', // Blocks requests. Use "DRY_RUN" to log only
       interval: '2s',
       max: 5,
-    })
-   
+    }),
   ],
 });
- 
+
 export default aj;

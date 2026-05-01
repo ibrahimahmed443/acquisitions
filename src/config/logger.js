@@ -1,4 +1,8 @@
-import { createLogger, format as _format, transports as _transports } from 'winston';
+import {
+  createLogger,
+  format as _format,
+  transports as _transports,
+} from 'winston';
 
 const logger = createLogger({
   level: process.env.LOG_LEVEL || 'info',
@@ -27,12 +31,11 @@ const logger = createLogger({
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 //
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new _transports.Console({
-    format: _format.combine(
-      _format.colorize(),
-      _format.simple()
-    ),
-  }));
+  logger.add(
+    new _transports.Console({
+      format: _format.combine(_format.colorize(), _format.simple()),
+    })
+  );
 }
 
 export default logger;

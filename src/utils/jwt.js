@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'some-secret-key';
 const JWT_EXPIRES_IN = '1d';
 
 export const jwttoken = {
-  sign: (payload) => {
+  sign: payload => {
     try {
       return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
     } catch (error) {
@@ -13,12 +13,12 @@ export const jwttoken = {
       throw new Error('Failed to authenticate token', { cause: error });
     }
   },
-  verify: (token) => {
+  verify: token => {
     try {
       return jwt.verify(token, JWT_SECRET);
     } catch (error) {
       logger.error('Failed to authenticate token', error);
       throw new Error('Failed to authenticate token', { cause: error });
     }
-  }
+  },
 };

@@ -4,7 +4,7 @@ import { users } from '#models/user.model.js';
 import { db } from '#config/database.js';
 import logger from '#config/logger.js';
 
-export const hashPassword = async (password) => {
+export const hashPassword = async password => {
   try {
     const saltRounds = 10;
     return await bcrypt.hash(password, saltRounds);
@@ -14,9 +14,13 @@ export const hashPassword = async (password) => {
   }
 };
 
-export const createUser = async ({ name, email, password, role='user'}) => {
+export const createUser = async ({ name, email, password, role = 'user' }) => {
   try {
-    const existingUser = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    const existingUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
     if (existingUser.length > 0) {
       throw new Error('User with this email already exists');
     }
@@ -25,8 +29,14 @@ export const createUser = async ({ name, email, password, role='user'}) => {
 
     const [newUser] = await db
       .insert(users)
-      .values({ name, email, password: hashedPassword, role})
-      .returning({ id: users.id, name: users.name, email: users.email, role: users.role, created_at: users.createdAt });
+      .values({ name, email, password: hashedPassword, role })
+      .returning({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        role: users.role,
+        created_at: users.createdAt,
+      });
 
     logger.info(`User created: ${email} with role ${role}`);
     return newUser;
@@ -48,7 +58,11 @@ export const comparePassword = async (password, hashedPassword) => {
 
 export const authenticateUser = async ({ email, password }) => {
   try {
-    const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
 
     if (!user) {
       throw new Error('User not found');

@@ -12,15 +12,19 @@ export const signUp = async (req, res, next) => {
     if (!validationResult.success) {
       return res.status(400).json({
         error: 'Validation failed',
-        details: formatValidationErrors(validationResult.error)
+        details: formatValidationErrors(validationResult.error),
       });
     }
 
     const { name, email, password, role } = validationResult.data;
 
-    const user = await createUser({ name, email, password, role});
+    const user = await createUser({ name, email, password, role });
 
-    const token = jwttoken.sign({ id: user.id, email: user.email, role: user.role });
+    const token = jwttoken.sign({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
     cookies.set(res, 'token', token);
 
@@ -28,8 +32,11 @@ export const signUp = async (req, res, next) => {
     res.status(201).json({
       message: 'User registered successfully',
       user: {
-        id : user.id, name: user.name, email: user.email, role: user.role
-      }
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (error) {
     logger.error('Error in signUp', error);
@@ -49,7 +56,7 @@ export const signIn = async (req, res, next) => {
     if (!validationResult.success) {
       return res.status(400).json({
         error: 'Validation failed',
-        details: formatValidationErrors(validationResult.error)
+        details: formatValidationErrors(validationResult.error),
       });
     }
 
@@ -57,19 +64,31 @@ export const signIn = async (req, res, next) => {
 
     const user = await authenticateUser({ email, password });
 
-    const token = jwttoken.sign({ id: user.id, email: user.email, role: user.role });
+    const token = jwttoken.sign({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
     cookies.set(res, 'token', token);
 
     logger.info(`User signed in: ${email}`);
     res.status(200).json({
       message: 'Signed in successfully',
-      user: { id: user.id, name: user.name, email: user.email, role: user.role }
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (error) {
     logger.error('Error in signIn', error);
 
-    if (error.message === 'User not found' || error.message === 'Invalid credentials') {
+    if (
+      error.message === 'User not found' ||
+      error.message === 'Invalid credentials'
+    ) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 

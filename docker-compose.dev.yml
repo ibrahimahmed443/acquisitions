@@ -8,7 +8,7 @@ services:
       - ./.neon_local/:/tmp/.neon_local
       - ./.git/HEAD:/tmp/.git/HEAD:ro,consistent
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U neon || exit 1"]
+      test: ['CMD-SHELL', 'pg_isready -h localhost -p 5432 -U neon || exit 1']
       interval: 5s
       timeout: 5s
       retries: 12
